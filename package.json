@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "This repository contains the GraphQL backend server for Perfect Score Academy written in Golang.",
   "main": "index.js",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc",
+    "start": "npm run compile && node ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +19,13 @@
     "url": "https://github.com/cwpark99/perfectscoreacademy-backend/issues"
   },
   "homepage": "https://github.com/cwpark99/perfectscoreacademy-backend#readme",
-  "type": "module~",
+  "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.5",
     "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3"
   }
 }

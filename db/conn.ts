@@ -1,0 +1,1 @@
+const Db: string = process.env.MONGODB_URI

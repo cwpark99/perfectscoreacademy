@@ -8,10 +8,6 @@ const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
   # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
 
   interface User {
     id: String
@@ -32,7 +28,7 @@ const typeDefs = `#graphql
     createdAt: Time
     updatedAt: Time
 
-    hours
+    availableHours: Int
   }
   
   type Teacher implements User {
@@ -48,8 +44,9 @@ const typeDefs = `#graphql
   }
 
   type Class {
-    teacher: Teacher
     classType: ClassType
+    teacher: Teacher
+    students: [Student]
     
     startsAt: Time
     endsAt: Time
@@ -61,15 +58,27 @@ const typeDefs = `#graphql
     ONLINE
   }
 
+
   
 
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    books: [Book]
+    students: [Student]
+    teachers: [Teacher]
+    classes: [Class]
+  }
+
+  type Mutation {
+    studentCreate: Student
+    studentUpdate: Student
+    teacherUpdate: Teacher
+    classUpdate: Class
   }
 `;
+
+
 
 const books = [
     {
@@ -86,7 +95,7 @@ const books = [
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-      books: () => books,
+      students: () => books,
     },
   };
 

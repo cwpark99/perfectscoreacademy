@@ -1,0 +1,115 @@
+scalar Time
+
+type Query {
+    student: Student
+    students: [Student]
+    teachers: [Teacher]
+    classes: [Class]
+}
+
+type Mutation {
+    studentCreate(input: StudentCreateInput!): Student
+    studentUpdate(input: StudentUpdateInput!): Student
+
+    teacherCreate(input: TeacherCreateInput!): Teacher
+    teacherUpdate(input: TeacherUpdateInput!): Teacher
+
+    classCreate(input: ClassCreateInput!): Class
+    classUpdate(input: ClassUpdateInput!): Class
+}
+
+interface User {
+    id: ID!
+    name: String
+    isActive: Boolean
+
+    createdAt: Time
+    updatedAt: Time
+}
+
+type Student implements User {
+    id: ID!
+    name: String
+    isActive: Boolean
+
+    createdAt: Time
+    updatedAt: Time
+
+    availableHours: Int
+    grade: Int
+    school: String
+    district: String
+}
+
+type Teacher implements User {
+    id: ID!
+    name: String
+    isActive: Boolean
+
+    createdAt: Time
+    updatedAt: Time
+
+    hourlyPay: Float
+    deferredPay: Float
+}
+
+type Class {
+    id: ID!
+    classType: ClassType
+    teacher: Teacher
+    students: [Student]
+
+    startsAt: Time
+    endsAt: Time
+
+    status: Boolean
+}
+
+enum ClassType {
+    PRIVATE
+    GROUP
+    ONLINE
+}
+
+input StudentCreateInput {
+    name: String
+    availableHours: Int
+    grade: Int
+    school: String
+    district: String
+}
+
+input StudentUpdateInput {
+    name: String
+    isActive: Boolean
+    addedHours: Int
+    grade: Int
+    school: String
+    district: String
+}
+
+input TeacherCreateInput {
+    name: String
+    hourlyPay: Float
+}
+
+input TeacherUpdateInput {
+    name: String
+    hourlyPay: Float
+    deferredPay: Float
+}
+
+input ClassCreateInput {
+    classType: ClassType
+    teacherID: ID!
+    studentsID: [ID!]!
+}
+
+input ClassUpdateInput {
+    classType: ClassType
+    teacherID: ID
+    studentsID: [ID]
+
+    startsAt: Time
+    endsAt: Time
+}

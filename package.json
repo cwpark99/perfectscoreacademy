@@ -1,36 +1,30 @@
 {
-  "name": "perfectscoreacademy-backend",
-  "version": "1.0.0",
-  "description": "This repository contains the GraphQL backend server for Perfect Score Academy written in Golang.",
-  "main": "index.js",
-  "scripts": {
-    "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cwpark99/perfectscoreacademy-backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cwpark99/perfectscoreacademy-backend/issues"
-  },
-  "homepage": "https://github.com/cwpark99/perfectscoreacademy-backend#readme",
-  "type": "module",
-  "dependencies": {
-    "@apollo/server": "^4.9.5",
-    "@apollo/subgraph": "^2.6.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6",
-    "mongodb": "^6.3.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.4",
-    "typescript": "^5.3.3"
-  }
+    "name": "mern-server-graphql",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "postinstall": "npm run compile",
+        "compile": "tsc",
+        "start": "npm run compile && node ./dist/server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+        "@apollo/server": "^4.7.5",
+        "@apollo/subgraph": "^2.4.8",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "graphql": "^16.7.1",
+        "graphql-tag": "^2.12.6",
+        "mongodb": "^5.6.0",
+        "punycode": "^2.3.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.3.3",
+        "typescript": "^5.1.6"
+    }
 }

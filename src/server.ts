@@ -1,109 +1,30 @@
 import { ApolloServer } from '@apollo/server';
+import resolvers from './resolver.js';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import gql from 'graphql-tag';
+import { readFileSync } from 'fs';
+import { resolve, dirname } from 'path';
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+import { fileURLToPath } from 'url';
 
-  # This "Book" type defines the queryable fields for every book in our data source.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  interface User {
-    id: String
-    name: String
-    type: UserType
-    isActive: Boolean
+//Schema
+const typeDefs = gql(
+    readFileSync(resolve(__dirname, '..', 'schema.graphql'), {
+        encoding: 'utf-8',
+    }),
+);
 
-    createdAt: Time
-    updatedAt: Time
-  }
-
-  type Student implements User {
-    id: String
-    name: String
-    type: UserType
-    isActive: Boolean
-    
-    createdAt: Time
-    updatedAt: Time
-
-    availableHours: Int
-  }
-  
-  type Teacher implements User {
-    id: String
-    name: String
-    type: UserType
-    isActive: Boolean
-
-    createdAt: Time
-    updatedAt: Time
-
-
-  }
-
-  type Class {
-    classType: ClassType
-    teacher: Teacher
-    students: [Student]
-    
-    startsAt: Time
-    endsAt: Time
-  }
-
-  enum ClassType {
-    PRIVATE
-    GROUP
-    ONLINE
-  }
-
-
-  
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    students: [Student]
-    teachers: [Teacher]
-    classes: [Class]
-  }
-
-  type Mutation {
-    studentCreate: Student
-    studentUpdate: Student
-    teacherUpdate: Teacher
-    classUpdate: Class
-  }
-`;
-
-
-
-const books = [
-    {
-      title: 'The Awakening',
-      author: 'Kate Chopin',
-    },
-    {
-      title: 'City of Glass',
-      author: 'Paul Auster',
-    },
-  ];
-
-  // Resolvers define how to fetch the types defined in your schema.
+// Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
-const resolvers = {
-    Query: {
-      students: () => books,
-    },
-  };
 
-  // The ApolloServer constructor requires two parameters: your schema
+// The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+    typeDefs,
+    resolvers,
 });
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
@@ -111,7 +32,7 @@ const server = new ApolloServer({
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
+    listen: { port: 4000 },
 });
 
 console.log(`🚀  Server ready at: ${url}`);
